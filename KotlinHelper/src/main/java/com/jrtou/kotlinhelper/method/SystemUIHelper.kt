@@ -1,7 +1,12 @@
 package com.jrtou.kotlinhelper.method
 
 import android.app.Activity
+import android.content.Context
+import android.util.DisplayMetrics
 import android.view.View
+import android.view.WindowManager
+import kotlin.math.pow
+import kotlin.math.sqrt
 
 /**
  * 隱藏系統UI
@@ -29,4 +34,20 @@ fun Activity.showSystemUI() {
     window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
             or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
             or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN)
+}
+
+/**
+ * 是否為 pad
+ */
+fun Context.isPad(): Boolean {
+    val wm = this.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+    val display = wm.defaultDisplay
+    val dm = DisplayMetrics()
+    display.getMetrics(dm)
+    val x = (dm.widthPixels / dm.xdpi.toDouble()).pow(2.0)
+    val y = (dm.heightPixels / dm.ydpi.toDouble()).pow(2.0)
+    // 屏幕尺寸
+    val screenInches = sqrt(x + y)
+    // 大于6尺寸则为Pad
+    return screenInches >= 6.0
 }
