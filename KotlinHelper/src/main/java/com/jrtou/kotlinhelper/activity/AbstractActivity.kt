@@ -19,8 +19,6 @@ abstract class AbstractActivity : AppCompatActivity() {
 
     @LayoutRes
     abstract fun getLayoutRes(): Int
-    abstract fun onRestoreData(bundle: Bundle)
-    abstract fun onSaveDate(bundle: Bundle)
 
     /**
      * 生命週期 [onCreate]
@@ -30,6 +28,22 @@ abstract class AbstractActivity : AppCompatActivity() {
      * 為 true 需 override [initDataBinding]
      */
     abstract fun enableDataBinding(): Boolean
+    abstract fun onRestoreData(bundle: Bundle)
+    abstract fun onSaveDate(bundle: Bundle)
+
+    /**
+     * 生命週期 [onResume]
+     *
+     * 綁定數據源
+     */
+    abstract fun bindData()
+
+    /**
+     * 生命週期 [onPause]
+     *
+     * 解綁數據源
+     */
+    abstract fun unbindData()
 
     /**
      * 生命週期 [onCreate]
@@ -41,23 +55,9 @@ abstract class AbstractActivity : AppCompatActivity() {
     /**
      * 生命週期 [onResume]
      *
-     * 綁定數據源
-     */
-    abstract fun bindData()
-
-    /**
-     * 生命週期 [onResume]
-     *
      * 在 [bindData] 之後執行
      */
     abstract fun onRender()
-
-    /**
-     * 生命週期 [onPause]
-     *
-     * 解綁數據源
-     */
-    abstract fun unbindData()
 
     /**
      * 是否開啟 loading ui

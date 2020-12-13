@@ -3,6 +3,7 @@ package com.jrtou.kotlinhelper.method
 import androidx.annotation.NonNull
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.jrtou.kotlinhelper.api.*
 
@@ -51,4 +52,8 @@ fun <I, T> MediatorLiveData<Resource<I>>.addApiSource(
             is ApiErrorResponse -> error(response)
         }
     }
+}
+
+fun <T> MutableLiveData<T>.notifyObserver() {
+    this.value = this.value
 }
