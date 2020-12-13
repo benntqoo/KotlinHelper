@@ -47,8 +47,8 @@ abstract class AbstractFragment<A : AppCompatActivity> : Fragment() {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        onSaveState(outState)
         super.onSaveInstanceState(outState)
+        onSaveState(outState)
     }
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
@@ -111,6 +111,4 @@ abstract class AbstractFragment<A : AppCompatActivity> : Fragment() {
      * activity 存在時 fragment 隱藏
      */
     abstract fun onHidden(activity: A)
-
-
 }

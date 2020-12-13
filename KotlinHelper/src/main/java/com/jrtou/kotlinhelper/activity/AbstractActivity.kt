@@ -82,16 +82,17 @@ abstract class AbstractActivity : AppCompatActivity() {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        onSaveDate(outState)
         super.onSaveInstanceState(outState)
+        onSaveDate(outState)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (enableDataBinding()) initDataBinding(getLayoutRes())
         else setContentView(getLayoutRes())
-        onViewSetting()
+
         intent?.extras?.let { onRestoreData(it) } ?: savedInstanceState?.let { onRestoreData(it) }
+        onViewSetting()
     }
 
     override fun onResume() {
