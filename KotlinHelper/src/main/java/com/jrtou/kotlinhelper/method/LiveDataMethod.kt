@@ -57,3 +57,23 @@ fun <I, T> MediatorLiveData<Resource<I>>.addApiSource(
 fun <T> MutableLiveData<T>.notifyObserver() {
     this.value = this.value
 }
+
+//////// API 使用
+fun <T> MediatorLiveData<Resource<T>>.applyValue(value: Resource<T>) = apply { this.value = value }
+
+/**
+ * 請求成功
+ */
+fun <T> MediatorLiveData<Resource<T>>.applySuccess(data: T?) = apply { setValue(Resource.success(data)) }
+
+/**
+ * 空數據
+ */
+fun <T> MediatorLiveData<Resource<T>>.applyEmpty() = apply { setValue(Resource.empty()) }
+fun <T> MediatorLiveData<Resource<T>>.applyLoading(data: T? = null) = apply { setValue(Resource.loading(data)) }
+fun <T> MediatorLiveData<Resource<T>>.applyError(message: String?, data: T? = null) = apply { setValue(Resource.error(message ?: "unknown error.", data)) }
+
+fun <D, T> MediatorLiveData<Resource<T>>.applyHttpError(errorResponse: ApiErrorResponse<D>, data: T? = null) = apply {
+    applyError("Server response: ${errorResponse.code} ${errorResponse.throwable.message}", data)
+}
+////////

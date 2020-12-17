@@ -6,6 +6,7 @@ import androidx.lifecycle.MediatorLiveData
 import com.jrtou.kotlinhelper.api.ApiErrorResponse
 import com.jrtou.kotlinhelper.api.Resource
 
+@Deprecated("1.0.3開始捨棄 改用 MediatorLiveData<Resource<T> 擴充方法")
 abstract class AbstractRepository<T> {
     val result = MediatorLiveData<Resource<T>>()
 

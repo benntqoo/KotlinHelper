@@ -91,7 +91,8 @@ abstract class AbstractActivity : AppCompatActivity() {
         if (enableDataBinding()) initDataBinding(getLayoutRes())
         else setContentView(getLayoutRes())
 
-        intent?.extras?.let { onRestoreData(it) } ?: savedInstanceState?.let { onRestoreData(it) }
+        intent?.extras?.let { onRestoreData(it) }
+            ?: savedInstanceState?.let { onRestoreData(it) }
         onViewSetting()
     }
 
