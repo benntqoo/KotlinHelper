@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.jrtou.kotlinhelper.api.Resource
 import com.jrtou.kotlinhelper.api.Status
+import com.jrtou.kotlinhelper.livedata.Event
 
 /**
  * 攜帶 isLoading 配合 api loading 使用
@@ -13,18 +14,11 @@ abstract class AbstractViewModel() : ViewModel() {
         private const val TAG = "AbstractViewModel"
     }
 
-    val isLoading: MutableLiveData<Boolean> = MutableLiveData()
+    val isLoading: MutableLiveData<Event<Boolean>> = MutableLiveData()
 
-    val errorMessage: MutableLiveData<String> = MutableLiveData()
+    val errorMessage: MutableLiveData<Event<String>> = MutableLiveData()
 
     fun <T> showLoading(api: Resource<T>?) {
-        isLoading.value = (api?.status ?: Status.LOADING) == Status.LOADING
-    }
-
-    /**
-     * 清除 錯誤訊息
-     */
-    fun clearMessage() {
-        errorMessage.value = ""
+        isLoading.value = Event((api?.status ?: Status.LOADING) == Status.LOADING)
     }
 }
