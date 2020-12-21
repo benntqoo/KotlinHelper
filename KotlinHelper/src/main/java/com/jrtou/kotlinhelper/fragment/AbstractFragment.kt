@@ -40,10 +40,10 @@ abstract class AbstractFragment<A : AppCompatActivity> : Fragment() {
         }
     }
 
-    override fun onDetach() {
+    override fun onDestroyView() {
+        super.onDestroyView()
         unbindObserver()
         mActivity = null
-        super.onDetach()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
