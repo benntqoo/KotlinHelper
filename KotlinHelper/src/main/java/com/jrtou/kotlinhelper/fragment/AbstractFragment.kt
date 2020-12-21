@@ -22,19 +22,14 @@ abstract class AbstractFragment<A : AppCompatActivity> : Fragment() {
         mActivity?.let { if (hidden) onHidden(it) else if (isResumed) onShow(it) }
     }
 
-    @Suppress("UNCHECKED_CAST")
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        activity?.let { mActivity = it as A }
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? = onInflaterView(inflater, container, savedInstanceState)
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         savedInstanceState?.let { onRestoreState(it) } ?: arguments?.let { onRestoreState(it) }
-        mActivity?.let {
+        activity?.let {
+            mActivity = it as A
             onViewSetting(it)
             bindObserver(it)
         }
