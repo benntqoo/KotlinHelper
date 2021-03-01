@@ -1,4 +1,4 @@
-package com.jrtou.kotlinhelper.method
+package com.jrtou.kotlinhelper.extend
 
 import androidx.annotation.IdRes
 import androidx.annotation.NavigationRes

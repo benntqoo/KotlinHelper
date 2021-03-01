@@ -14,8 +14,14 @@ abstract class AbstractViewModel() : ViewModel() {
         private const val TAG = "AbstractViewModel"
     }
 
+    /**
+     * 加載監聽
+     */
     val isLoading: MutableLiveData<Event<Boolean>> = MutableLiveData()
 
+    /**
+     * 訊息提示
+     */
     val errorMessage: MutableLiveData<Event<String>> = MutableLiveData()
 
     fun <T> showLoading(api: Resource<T>?) {

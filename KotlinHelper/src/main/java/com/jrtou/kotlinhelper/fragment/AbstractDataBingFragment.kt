@@ -5,21 +5,40 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import com.jrtou.kotlinhelper.extend.reuseRoot
 
-abstract class AbstractFragment<A : AppCompatActivity> : Fragment() {
+abstract class AbstractDataBingFragment<A : AppCompatActivity, BIND : ViewDataBinding> : Fragment() {
     companion object {
-        private const val TAG = "AbstractFragment"
+        private const val TAG = "AbstractFragment2"
     }
 
+
+    lateinit var bind: BIND
     var mActivity: A? = null
+
 
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
         mActivity?.let { if (hidden) onHidden(it) else if (isResumed) onShow(it) }
     }
+
+
+    /**
+     * 插入 view
+     */
+    open fun onInflaterView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View = if (this::bind.isInitialized) bind.reuseRoot()
+    else {
+        bind = DataBindingUtil.inflate(inflater, getLayoutRes(), container, false)
+        initDataBind(bind)
+        bind.root
+    }
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? = onInflaterView(inflater, container, savedInstanceState)
 
@@ -61,6 +80,11 @@ abstract class AbstractFragment<A : AppCompatActivity> : Fragment() {
     fun checkPermission(permission: String): Boolean = activity?.run { ActivityCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED } ?: false
 
 
+    @LayoutRes
+    abstract fun getLayoutRes(): Int
+
+    abstract fun initDataBind(bind: BIND)
+
     /**
      * fragment 重新建立恢復 bundle 處存資料
      */
@@ -80,11 +104,6 @@ abstract class AbstractFragment<A : AppCompatActivity> : Fragment() {
      * 解除 Observer 綁定
      */
     abstract fun unbindObserver()
-
-    /**
-     * 插入 view
-     */
-    abstract fun onInflaterView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View
 
     /**
      * 初始化 ui 基本設定 ex setListener or setAdapter

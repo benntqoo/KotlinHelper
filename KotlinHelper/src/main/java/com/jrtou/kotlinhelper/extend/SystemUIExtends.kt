@@ -1,4 +1,4 @@
-package com.jrtou.kotlinhelper.method
+package com.jrtou.kotlinhelper.extend
 
 import android.app.Activity
 import android.content.Context

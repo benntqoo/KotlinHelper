@@ -1,4 +1,4 @@
-package com.jrtou.kotlinhelper.method
+package com.jrtou.kotlinhelper.extend
 
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken

@@ -1,4 +1,4 @@
-package com.jrtou.kotlinhelper.method
+package com.jrtou.kotlinhelper.extend
 
 /**
  * 獲取秒
