@@ -1,5 +1,6 @@
 package com.jrtou.kotlinhelper.viewmodel
 
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.jrtou.kotlinhelper.api.Resource
@@ -17,14 +18,24 @@ abstract class AbstractViewModel() : ViewModel() {
     /**
      * 加載監聽
      */
-    val isLoading: MutableLiveData<Event<Boolean>> = MutableLiveData()
+    val isLoading: MediatorLiveData<Event<Boolean>> = MediatorLiveData()
 
     /**
      * 訊息提示
      */
-    val errorMessage: MutableLiveData<Event<String>> = MutableLiveData()
+    val message: MediatorLiveData<Event<String>> = MediatorLiveData()
+
+
+    abstract fun setupWithRepository()
+    abstract fun unbindRepository()
+
 
     fun <T> showLoading(api: Resource<T>?) {
         isLoading.value = Event((api?.status ?: Status.LOADING) == Status.LOADING)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        unbindRepository()
     }
 }

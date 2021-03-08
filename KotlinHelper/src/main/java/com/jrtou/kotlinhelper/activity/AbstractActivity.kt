@@ -11,7 +11,6 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import com.jrtou.kotlinhelper.exception.OverrideException
-import com.jrtou.kotlinhelper.livedata.Event
 
 abstract class AbstractActivity : AppCompatActivity() {
     companion object {
@@ -64,21 +63,18 @@ abstract class AbstractActivity : AppCompatActivity() {
      * 是否開啟 loading ui
      */
     abstract fun isLoading(isLoading: Boolean)
-    fun isLoading(event: Event<Boolean>) = event.getDataIfNotHandled()?.apply { isLoading(this) }
 
     /**
      * 是否顯示 message dialog
      */
-    abstract fun showMessage(message: String, submit: (() -> Unit)? = null, cancel: (() -> Unit)? = null)
-    fun showMessage(@StringRes message: Int, submit: (() -> Unit)? = null, cancel: (() -> Unit)? = null) = showMessage(getString(message), submit, cancel)
-
+    abstract fun showDialog(message: String, submit: (() -> Unit)? = null, cancel: (() -> Unit)? = null)
+    fun showDialog(@StringRes message: Int, submit: (() -> Unit)? = null, cancel: (() -> Unit)? = null) = showDialog(getString(message), submit, cancel)
 
     /**
-     * 是否顯示 message dialog
+     * 顯示錯誤訊息 單一按鈕使用
      */
-    fun showMessage(message: Event<String>, submit: (() -> Unit)? = null, cancel: (() -> Unit)? = null) {
-        message.getDataIfNotHandled()?.apply { showMessage(this, submit, cancel) }
-    }
+    abstract fun showMessage(message: String)
+
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
