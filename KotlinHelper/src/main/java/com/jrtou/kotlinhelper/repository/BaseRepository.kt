@@ -64,7 +64,7 @@ open class BaseRepository {
             return
         }
 
-        if (Looper.myLooper() == Looper.getMainLooper()) isLoading.value = Event((response.status) == Status.LOADING)
-        else isLoading.postValue(Event((response.status) == Status.LOADING))
+        if (Looper.myLooper() == Looper.getMainLooper()) isLoading.value = Event(response.status == Status.LOADING)
+        else isLoading.postValue(Event(response.status == Status.LOADING))
     }
 }
