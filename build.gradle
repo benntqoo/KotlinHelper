@@ -1,5 +1,13 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
+    /**
+     * 獲取 版本號
+     */
+    ext.getVersionCodeByDate = { int times ->
+        def date = new Date().format('yyyyMMdd') + times
+        return Integer.valueOf(date)
+    }
+
     ext.kotlin_version = "1.4.31"
     repositories {
         google()
