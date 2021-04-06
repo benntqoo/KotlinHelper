@@ -35,3 +35,16 @@ val Long.hour
  */
 val Long.stringHour
     get() = (this / (1000 * 60 * 60) % 60).run { if (this <= 0) "" else if (this < 10) "0$this" else this.toString() }
+
+
+val Long.toMin
+    get() = this / (1000 * 60)
+
+val Long.toSec
+    get() = this / 1000
+
+val Long.toHour
+    get() = this / (1000 * 60 * 60)
+
+val Long.toDay
+    get() = this / (1000 * 60 * 60 / 24)

@@ -12,22 +12,15 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import com.jrtou.kotlinhelper.extend.reuseRoot
+import com.jrtou.kotlinhelper.helper.KeyboardHelper
 
 abstract class AbstractDataBingFragment<A : AppCompatActivity, BIND : ViewDataBinding> : Fragment() {
     companion object {
         private const val TAG = "AbstractFragment2"
     }
 
-
     lateinit var bind: BIND
     var mActivity: A? = null
-
-
-    override fun onHiddenChanged(hidden: Boolean) {
-        super.onHiddenChanged(hidden)
-        mActivity?.let { if (hidden) onHidden(it) else if (isResumed) onShow(it) }
-    }
-
 
     /**
      * 插入 view
@@ -74,6 +67,11 @@ abstract class AbstractDataBingFragment<A : AppCompatActivity, BIND : ViewDataBi
         mActivity?.let { if (!isHidden) onRenderView(it) }
     }
 
+    override fun onStop() {
+        mActivity?.apply { KeyboardHelper.hideKeyboard(this) }
+        super.onStop()
+    }
+
     /**
      * 判斷使否有權限
      */
@@ -114,14 +112,4 @@ abstract class AbstractDataBingFragment<A : AppCompatActivity, BIND : ViewDataBi
      *請求數據 渲染至 ui 上
      */
     abstract fun onRenderView(activity: A)
-
-    /**
-     * activity 存在時 fragment 顯示
-     */
-    abstract fun onShow(activity: A)
-
-    /**
-     * activity 存在時 fragment 隱藏
-     */
-    abstract fun onHidden(activity: A)
 }

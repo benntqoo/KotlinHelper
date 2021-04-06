@@ -23,7 +23,7 @@ object RegularHelper {
      * @return boolean
      */
     fun checkMobileFormat(mobile: String): Boolean {
-        val pattern = Pattern.compile("^9\\d{2}-?\\d{3}-?\\d{3}$")
+        val pattern = Pattern.compile("^09\\d{2}-?\\d{3}-?\\d{3}$")
         val matcher = pattern.matcher(mobile)
         return matcher.matches()
     }
