@@ -117,7 +117,7 @@ abstract class AbstractActivity : AppCompatActivity() {
         if (disableFontSizeFollowSystem()) {
             val newConfig = Configuration()
             newConfig.setToDefaults()
-            newConfig.fontScale = 1f
+            if (newConfig.fontScale > 1f) newConfig.fontScale = 1f
             res = createConfigurationContext(newConfig).resources
         }
         return res
